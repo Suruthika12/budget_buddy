@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Your Transactions - Budget Buddy</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <h2>Your Transactions</h2>
+        <a href="logout.php" class="logout-btn">Logout</a>
+    </header>
+
+    <!-- Back Button -->
+    <div style="margin: 20px;">
+        <button onclick="window.location.href='dashboard.html'" class="back-btn">← Back to Dashboard</button>
+    </div>
+
+    <!-- Summary -->
+    <section class="summary-section">
+        <div class="summary">
+            <h3>Summary</h3>
+            <p>Total Income: ₹<span id="totalIncome">0</span></p>
+            <p>Total Expense: ₹<span id="totalExpense">0</span></p>
+            <p>Balance: ₹<span id="balance">0</span></p>
+        </div>
+    </section>
+
+
+    <!-- Main Flex Layout: Filters + Transactions -->
+    <section class="main-flex">
+        <div class="transaction-list">
+            <h3>All Transactions</h3>
+            <ul id="transactions"></ul>
+        </div>
+
+        <div class="filters">
+            <h3>Filter</h3>
+            <select id="filterType">
+                <option value="">All</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <input type="text" id="filterCategory" placeholder="Category (e.g. Rent)" />
+            <label for="startDate">From:</label>
+            <input type="date" id="startDate" />
+
+            <label for="endDate">To:</label>
+            <input type="date" id="endDate" />
+            <button onclick="loadTransactions()">Apply</button>
+        </div>
+    </section>
+
+    <!-- Expense Chart
+    <section class="chart-area">
+        <h3>Expense Overview</h3>
+        <canvas id="expenseChart"></canvas>
+    </section> -->
+    <!-- <section class="ai-suggestions">
+        <h3>Smart Tips 💡</h3>
+        <ul id="suggestionsList"></ul>
+    </section> -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>

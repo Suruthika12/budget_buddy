@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Budget Buddy</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h2>Welcome to Budget Buddy</h2>
+    <a href="logout.php">Logout</a>
+  </header>
+
+  <main class="dashboard-container">
+    <!-- Summary -->
+    <section class="summary">
+      <h3>Summary</h3>
+      <p>Total Income: ₹<span id="totalIncome">0</span></p>
+      <p>Total Expense: ₹<span id="totalExpense">0</span></p>
+      <p>Balance: ₹<span id="balance">0</span></p>
+    </section>
+
+    <!-- Add Transaction -->
+    <section class="add-transaction">
+      <h3>Add New Transaction</h3>
+      <form id="transactionForm">
+        <select name="type" required>
+          <option value="">Select Type</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <input type="text" name="category" placeholder="Category (e.g. Food, Rent)" required />
+        <input type="number" name="amount" placeholder="Amount" step="1" required />
+        <input type="date" name="date" required />
+        <input type="text" name="description" placeholder="Description (optional)" />
+        <button type="submit">Add Transaction</button>
+      </form>
+
+      <!-- View Transactions Button -->
+      <div style="margin-top: 20px;">
+        <button onclick="window.location.href='transactions.html'" class="view-btn" class="button-group">
+          View All Transactions
+        </button>
+        <button onclick="location.href='insights.html'" class="view-btn" class="button-group">View Insights</button>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

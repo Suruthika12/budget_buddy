@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insights - Expense Overview & Smart Tips</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>Budget Buddy - Insights</h1>
+    <a href="dashboard.html">Back to Dashboard</a>
+  </header>
+
+  <main class="dashboard-container">
+    <!-- Expense Chart Section -->
+    <section class="chart-area">
+      <h2>Expense Overview</h2>
+      <canvas id="expenseChart" width="400" height="200"></canvas>
+    </section>
+
+    <!-- Smart Tips Section -->
+    <section class="ai-suggestions">
+      <h2>Smart Tips 💡</h2>
+      <ul id="suggestionsList"></ul>
+    </section>
+  </main>
+
+  
+  <script>
+function renderExpenseChart(categoryMap) {
+  const ctx = document.getElementById('expenseChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(categoryMap),
+      datasets: [{
+        label: 'Expenses by Category',
+        data: Object.values(categoryMap),
+        backgroundColor: '#e74c3c',
+        barPercentage: 0.3,
+        categoryPercentage: 0.5
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `₹${context.raw}`;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Amount (₹)'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Fetch category-wise data from backend
+fetch('get_categories.php')
+  .then(response => response.json())
+  .then(data => {
+    renderExpenseChart(data);
+    renderSmartTips(data);
+  })
+  .catch(error => {
+    console.error("Error fetching chart data:", error);
+  });
+
+// Optional: Smart Suggestions (basic logic, enhance as needed)
+function renderSmartTips(data) {
+  const suggestions = [];
+  const highestCategory = Object.entries(data).reduce((a, b) => (a[1] > b[1] ? a : b));
+  
+  suggestions.push(`You're spending the most on <strong>${highestCategory[0]}</strong> (₹${highestCategory[1]}). Consider setting a monthly limit.`);
+  
+  const foodSpending = data['Food'] || 0;
+  if (foodSpending > 1000) {
+    suggestions.push("Try reducing eating out to save more on Food expenses.");
+  }
+
+  const travelSpending = data['Travel'] || 0;
+  if (travelSpending > 800) {
+    suggestions.push("Can you try carpooling or public transport more often?");
+  }
+
+  const list = document.getElementById("suggestionsList");
+  list.innerHTML = "";
+  suggestions.forEach(tip => {
+    const li = document.createElement("li");
+    li.innerHTML = tip;
+    list.appendChild(li);
+  });
+}
+</script>
+
+
+</body>
+</html>
