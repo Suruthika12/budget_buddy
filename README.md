@@ -1,0 +1,1 @@
+**Budget Buddy** is a simple, user-friendly personal finance web application built using HTML, CSS, JavaScript, PHP, and MySQL. It allows users to manage their income and expenses, track spending by category, and gain financial insights via visual charts.
